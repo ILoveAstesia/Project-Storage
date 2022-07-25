@@ -1,0 +1,229 @@
+.vs/VSWorkspaceState.json
+.vs/Project Storage/FileContentIndex/7ca96112-911d-4bd1-94ea-a7d43108c9cb.vsidx
+.vs/Project Storage/FileContentIndex/45ccfda6-baea-45e7-bccb-f3769ad1cfad.vsidx
+.vs/Project Storage/FileContentIndex/135c50f4-38ec-4981-afcc-8e3bd529e382.vsidx
+.vs/Project Storage/FileContentIndex/f5566f2a-9d48-43c5-94e5-235c005799c2.vsidx
+.vs/Project Storage/FileContentIndex/read.lock
+.vs/Project Storage/v17/.suo
+.vs/Project Storage/v17/Browse.VC.db
+.vs/Project Storage/v17/Browse.VC.db-shm
+.vs/Project Storage/v17/Browse.VC.db-wal
+.vs/Project Storage/v17/Browse.VC.opendb
+.vs/Project Storage/v17/HierarchyCache.v1.txt
+.vs/Project Storage/v17/ipch/AutoPCH/13cdf80e19e82d0c/记账程序.ipch
+.vs/Project Storage/v17/ipch/AutoPCH/2bdb583f73ce669e/链表例子.ipch
+.vs/Project Storage/v17/ipch/AutoPCH/37cbbadf0886944a/文件的输入输出.ipch
+.vs/Project Storage/v17/ipch/AutoPCH/79e07f2c00d70ea0/链表例子.ipch
+.vs/Project Storage/v17/ipch/AutoPCH/9182e87b81defcb7/练习库.ipch
+.vs/Project Storage/v17/ipch/AutoPCH/b903b061fd3fce62/记账程序.ipch
+.vs/Project Storage/v17/ipch/AutoPCH/b93fcb33b5221f11/记账源.ipch
+.vs/Project Storage/v17/ipch/AutoPCH/b9bccb1ef2228c34/记账程序.ipch
+.vs/Project Storage/v17/ipch/AutoPCH/c11ad18ab4f413f/练习库.ipch
+.vs/Project Storage/v17/ipch/AutoPCH/e8e1faf3d68ff059/练习库.ipch
+.vs/Project Storage/v17/ipch/AutoPCH/f31bfd68d4ffd43a/记账程序(FILE VER).ipch
+.vs/Project Storage/v17/ipch/AutoPCH/fbafa95aca9d7644/文件的输入输出.ipch
+.vs/Project1/FileContentIndex/2669ae62-fff7-4c21-9d00-2a2783b8b7a0.vsidx
+.vs/Project1/FileContentIndex/582324b6-2ec0-463d-8975-284f6a2d1c49.vsidx
+.vs/Project1/FileContentIndex/a01e9e3b-060b-4c91-92bc-3d4b05b0d964.vsidx
+.vs/Project1/FileContentIndex/c1ef96dd-cc11-44a8-a2bf-b8c2bcb2249c.vsidx
+.vs/Project1/FileContentIndex/read.lock
+.vscode/settings.json
+Debug/源1.obj
+Debug/Project1.exe
+Debug/Project1.exe.recipe
+Debug/Project1.ilk
+Debug/Project1.log
+Debug/Project1.pdb
+Debug/Project1.vcxproj.FileListAbsolute.txt
+Debug/vc142.idb
+Debug/vc142.pdb
+Debug/vc143.idb
+Debug/vc143.pdb
+Debug/Project1.tlog/CL.command.1.tlog
+Debug/Project1.tlog/CL.read.1.tlog
+Debug/Project1.tlog/CL.write.1.tlog
+Debug/Project1.tlog/link.command.1.tlog
+Debug/Project1.tlog/link.read.1.tlog
+Debug/Project1.tlog/link.write.1.tlog
+Debug/Project1.tlog/Project1.lastbuildstate
+include/errmsg.h
+include/field_types.h
+include/my_command.h
+include/my_compress.h
+include/my_list.h
+include/mysql_com.h
+include/mysql_time.h
+include/mysql_version.h
+include/mysql.h
+include/mysqld_error.h
+include/mysqlx_ername.h
+include/mysqlx_error.h
+include/mysqlx_version.h
+include/mysql/client_plugin.h
+include/mysql/plugin_auth_common.h
+include/mysql/udf_registration_types.h
+include/openssl/applink.c
+lib/connection_pool.dll
+lib/http_auth_backend.dll
+lib/http_auth_realm.dll
+lib/http_server.dll
+lib/io.dll
+lib/keepalive.dll
+lib/libmysql.dll
+lib/libmysql.lib
+lib/libprotobuf-lite.dll
+lib/libprotobuf-lite.lib
+lib/metadata_cache.dll
+lib/mysqlclient.lib
+lib/mysqlharness_stdx.lib
+lib/mysqlharness_tls.lib
+lib/mysqlrouter_connection_pool.lib
+lib/mysqlrouter_http_auth_backend.lib
+lib/mysqlrouter_http_auth_realm.lib
+lib/mysqlrouter_http.lib
+lib/mysqlrouter_io_component.lib
+lib/mysqlrouter_lib.lib
+lib/mysqlrouter_metadata_cache.lib
+lib/mysqlrouter_mysqlxmessages.dll
+lib/mysqlrouter_mysqlxmessages.lib
+lib/mysqlrouter_routing.lib
+lib/rest_api.dll
+lib/rest_connection_pool.dll
+lib/rest_metadata_cache.dll
+lib/rest_router.dll
+lib/rest_routing.dll
+lib/router_openssl.dll
+lib/router_protobuf.dll
+lib/routing.dll
+lib/mecab/dic/ipadic_euc-jp/char.bin
+lib/mecab/dic/ipadic_euc-jp/dicrc
+lib/mecab/dic/ipadic_euc-jp/left-id.def
+lib/mecab/dic/ipadic_euc-jp/matrix.bin
+lib/mecab/dic/ipadic_euc-jp/pos-id.def
+lib/mecab/dic/ipadic_euc-jp/rewrite.def
+lib/mecab/dic/ipadic_euc-jp/right-id.def
+lib/mecab/dic/ipadic_euc-jp/sys.dic
+lib/mecab/dic/ipadic_euc-jp/unk.dic
+lib/mecab/dic/ipadic_sjis/char.bin
+lib/mecab/dic/ipadic_sjis/dicrc
+lib/mecab/dic/ipadic_sjis/left-id.def
+lib/mecab/dic/ipadic_sjis/matrix.bin
+lib/mecab/dic/ipadic_sjis/pos-id.def
+lib/mecab/dic/ipadic_sjis/rewrite.def
+lib/mecab/dic/ipadic_sjis/right-id.def
+lib/mecab/dic/ipadic_sjis/sys.dic
+lib/mecab/dic/ipadic_sjis/unk.dic
+lib/mecab/dic/ipadic_utf-8/char.bin
+lib/mecab/dic/ipadic_utf-8/dicrc
+lib/mecab/dic/ipadic_utf-8/left-id.def
+lib/mecab/dic/ipadic_utf-8/matrix.bin
+lib/mecab/dic/ipadic_utf-8/pos-id.def
+lib/mecab/dic/ipadic_utf-8/rewrite.def
+lib/mecab/dic/ipadic_utf-8/right-id.def
+lib/mecab/dic/ipadic_utf-8/sys.dic
+lib/mecab/dic/ipadic_utf-8/unk.dic
+lib/mecab/etc/mecabrc
+lib/plugin/adt_null.dll
+lib/plugin/authentication_fido_client.dll
+lib/plugin/authentication_kerberos_client.dll
+lib/plugin/authentication_oci_client.dll
+lib/plugin/component_audit_api_message_emit.dll
+lib/plugin/component_keyring_file.dll
+lib/plugin/component_log_filter_dragnet.dll
+lib/plugin/component_log_sink_json.dll
+lib/plugin/component_log_sink_syseventlog.dll
+lib/plugin/component_mysqlbackup.dll
+lib/plugin/component_query_attributes.dll
+lib/plugin/component_reference_cache.dll
+lib/plugin/component_validate_password.dll
+lib/plugin/connection_control.dll
+lib/plugin/ddl_rewriter.dll
+lib/plugin/group_replication.dll
+lib/plugin/ha_example.dll
+lib/plugin/ha_mock.dll
+lib/plugin/keyring_file.dll
+lib/plugin/keyring_udf.dll
+lib/plugin/libpluginmecab.dll
+lib/plugin/locking_service.dll
+lib/plugin/mypluglib.dll
+lib/plugin/mysql_clone.dll
+lib/plugin/mysql_no_login.dll
+lib/plugin/rewrite_example.dll
+lib/plugin/rewriter.dll
+lib/plugin/semisync_master.dll
+lib/plugin/semisync_replica.dll
+lib/plugin/semisync_slave.dll
+lib/plugin/semisync_source.dll
+lib/plugin/validate_password.dll
+lib/plugin/version_token.dll
+lib/private/icudt69l/unames.icu
+lib/private/icudt69l/brkitr/burmesedict.dict
+lib/private/icudt69l/brkitr/char.brk
+lib/private/icudt69l/brkitr/cjdict.dict
+lib/private/icudt69l/brkitr/de.res
+lib/private/icudt69l/brkitr/el.res
+lib/private/icudt69l/brkitr/en_US_POSIX.res
+lib/private/icudt69l/brkitr/en_US.res
+lib/private/icudt69l/brkitr/en.res
+lib/private/icudt69l/brkitr/es.res
+lib/private/icudt69l/brkitr/fr.res
+lib/private/icudt69l/brkitr/it.res
+lib/private/icudt69l/brkitr/ja.res
+lib/private/icudt69l/brkitr/khmerdict.dict
+lib/private/icudt69l/brkitr/laodict.dict
+lib/private/icudt69l/brkitr/line_cj.brk
+lib/private/icudt69l/brkitr/line_loose_cj.brk
+lib/private/icudt69l/brkitr/line_loose.brk
+lib/private/icudt69l/brkitr/line_normal_cj.brk
+lib/private/icudt69l/brkitr/line_normal.brk
+lib/private/icudt69l/brkitr/line.brk
+lib/private/icudt69l/brkitr/pt.res
+lib/private/icudt69l/brkitr/res_index.res
+lib/private/icudt69l/brkitr/root.res
+lib/private/icudt69l/brkitr/ru.res
+lib/private/icudt69l/brkitr/sent_el.brk
+lib/private/icudt69l/brkitr/sent.brk
+lib/private/icudt69l/brkitr/thaidict.dict
+lib/private/icudt69l/brkitr/title.brk
+lib/private/icudt69l/brkitr/word_POSIX.brk
+lib/private/icudt69l/brkitr/word.brk
+lib/private/icudt69l/brkitr/zh_Hant.res
+lib/private/icudt69l/brkitr/zh.res
+x64/Debug/仓库 2022.exe.recipe
+x64/Debug/仓库 2022.ilk
+x64/Debug/仓库 2022.pdb
+x64/Debug/仓库.obj
+x64/Debug/记账程序.obj
+x64/Debug/记账程序(File ver).obj
+x64/Debug/记账源.obj
+x64/Debug/练习库.obj
+x64/Debug/文件的输入输出.obj
+x64/Debug/Project1.exe
+x64/Debug/Project1.exe.recipe
+x64/Debug/Project1.ilk
+x64/Debug/Project1.log
+x64/Debug/Project1.pdb
+x64/Debug/Project1.vcxproj.FileListAbsolute.txt
+x64/Debug/vc143.idb
+x64/Debug/vc143.pdb
+x64/Debug/Project1.tlog/CL.command.1.tlog
+x64/Debug/Project1.tlog/CL.read.1.tlog
+x64/Debug/Project1.tlog/CL.write.1.tlog
+x64/Debug/Project1.tlog/link.command.1.tlog
+x64/Debug/Project1.tlog/link.read.1.tlog
+x64/Debug/Project1.tlog/link.write.1.tlog
+x64/Debug/Project1.tlog/Project1.lastbuildstate
+x64/Debug/仓库 2022.tlog/仓库 2022.lastbuildstate
+x64/Debug/仓库 2022.tlog/CL.command.1.tlog
+x64/Debug/仓库 2022.tlog/CL.read.1.tlog
+x64/Debug/仓库 2022.tlog/CL.write.1.tlog
+x64/Debug/仓库 2022.tlog/link.command.1.tlog
+x64/Debug/仓库 2022.tlog/link.read.1.tlog
+x64/Debug/仓库 2022.tlog/link.write.1.tlog
+Project Storage.sln
+Project1.vcxproj
+Project1.vcxproj.filters
+Project1.vcxproj.user
+study.txt
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
