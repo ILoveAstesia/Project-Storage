@@ -345,22 +345,83 @@ class DB{
 	}
 
 	///< 释放结果集
-	mysql_free_result(res);
+	// mysql_free_result(res);
 
 	///< 关闭数据库连接
-	mysql_close(&mysql);
+	// mysql_close(&mysql);
 
-	system("pause");
+	// system("pause");
+    }
+
+    void add(){
+        //添加
+        sprintf_s(sql, 1024, "insert into new_table values('7/10', '0','测试add')");
+        //执行语句
+        mysql_real_query(&mysql, sql, (unsigned int)strlen(sql));
+    
+    }
+
+    void remove(){
+        //添加 DELETE FROM 表名称 WHERE 列名称 = 值
+        sprintf_s(sql, 1024, "DELETE FROM new_table WHERE idnew_table = '7/10'");
+        //执行语句
+        //mysql_real_query(&mysql, sql, (unsigned int)strlen(sql));
+        if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+	{
+		cout << "查询失败" << ": "  << mysql_errno(&mysql) << endl;
+	}
+    }
+
+    void update(){
+        //UPDATE Person SET FirstName = 'Fred' WHERE LastName = 'Wilson' 
+        sprintf_s(sql, 1024, "UPDATE new_table SET new_tablecol = 10 WHERE idnew_table = '7/10'");
+        //执行语句
+        if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+	{
+		cout << "查询失败" << ": "  << mysql_errno(&mysql) << endl;
+	}
+    
+    }
+
+    void custom(){
+
     }
 
     void menu(){
         int i=0;
+        cout << "\t" << "0 s" << "\n" << "\t" << "1 a" << "\n" << "\t" << "2 r" << "\n" << "\t" << "3 u" << "\n" << "\t" << "4 c" << "\n";
+        scanf_s("%d", &i);
         switch (i)
         {
+        case -1: 	
+        ///< 释放结果集
+	     mysql_free_result(res);
+
+	///< 关闭数据库连接
+	    mysql_close(&mysql);
+        return;
+        break;
+
         case 0 :
             select();
+            menu();
             break;
-        
+        case 1 :
+            add();
+            menu();
+            break;
+        case 2 :
+            remove();
+            menu();
+            break;
+        case 3 :
+            update();
+            menu();
+            break;
+        case 4:
+            custom();
+            menu();
+            break;
         default:
             break;
         }
