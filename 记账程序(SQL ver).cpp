@@ -1,7 +1,7 @@
 ﻿#include<iostream>
 #include<sstream>
 #include "mysql.h"
-
+#include<string.h>
 #include <windows.h>
 
 using namespace std;
@@ -59,6 +59,19 @@ void refresh_part(){
 
 }
 
+//unsuccessed
+string transform_string_To_char(){
+    string uri="astesia",name="ila",sex="boy";
+    string st = "insert into DBTable(URI,Name,Sex)values(" + uri + "," + name +"," + sex + ")";
+    
+    const char* k = NULL;
+
+    k = st.c_str();	//让指针指向s1的位置
+    
+    char a[1024];
+    
+    return k;
+}
 
 class DB{
 
@@ -128,10 +141,13 @@ public:
         }
     
     }
-    //动态
-    void add(char key[32],float val,char text[128]){
-        sprintf_s(sql, 1024, "insert into new_table values('7/10', '0','测试add')");
-        //执行语句
+    //动态 char key[32],float val,char text[128]
+    void add(string key,string val,string text){
+        string st = "insert into new_table values(\'"  + key + "\',\'" + val + "\',\'" + text + "\')";
+        char a[1024];
+        strcpy_s(a, st.c_str());
+        sprintf_s(sql, 1024, a);
+        cout << sql;
         if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
         {
             cout << "查询失败" << ": " << mysql_errno(&mysql) << endl;
@@ -269,9 +285,22 @@ public:
 int main()
 {
     DB b;
-    b.menu();
+    //b.menu();
+    b.add("7/3","32","测试动态''");//用两个单引号可以表示一个单引号数据
+   
+   //c++ ? sql foramt
+    /*
+    string uri="astesia",name="ila",sex="boy";
+    string st = "insert into DBTable(URI,Name,Sex)values(" + uri + "," + name +"," + sex + ")";
+    
+    const char* k = NULL;
 
-
+    k = st.c_str();	//让指针指向s1的位置
+    
+    //cout << k;
+    printf(k);
+   */
+	
 
     cout<<"进程已结束,";
     system("pause");
