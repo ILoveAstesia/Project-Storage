@@ -2,11 +2,63 @@
 #include<sstream>
 #include "mysql.h"
 
+#include <windows.h>
+
 using namespace std;
 
 const char dbusername[10] = "root";
 const char dbpassword[10] = "Astesia";
 const char dbname[12] = "new_schema";
+//刷新前置 //移动光标 ! unused !
+void gotoxy() {
+    COORD pos = {0,0}; 
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE); 
+    SetConsoleCursorPosition(hOut, pos); 
+    }    
+
+void gotoxy(int x, int y) {
+    COORD pos = {x,y}; 
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE); 
+    SetConsoleCursorPosition(hOut, pos); 
+    }
+
+void refresh_whole(){
+    for(int i=1;i<=1;i++) {
+		gotoxy(0,0);	
+        					//将光标移动至控制台左上角
+		for(int k=1;k<=10;k++) {
+
+			for(int j=1;j<=i;j++)
+            {cout<<" ";}
+            
+			cout<<"Hello, world"<<endl;
+		}
+
+		Sleep(100);
+	}
+
+
+}
+
+void refresh_part(){
+
+    for(int i=1;i<=10;i++) {
+		for(int k=1;k<=10;k++) {
+			gotoxy(i-1,k-1);				//将光标移至第k行，第i列
+
+			cout<<"Hello, world";
+            Sleep(100);
+
+			if(i>1) {						//i大于1时做，不然坐标会变成负数
+				gotoxy(i-2,k-1);			//将光标移至前一个字符
+				cout<<' ';					//清除那个字符
+			}
+		}
+		Sleep(100);
+	}
+
+}
+
 
 class DB{
 
@@ -65,8 +117,19 @@ public:
 	    }
     }
 
-        //添加
+    //添加
+    //静态 
     void add(){
+        sprintf_s(sql, 1024, "insert into new_table values('7/10', '0','测试add')");
+        //执行语句
+        if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+        {
+            cout << "查询失败" << ": " << mysql_errno(&mysql) << endl;
+        }
+    
+    }
+    //动态
+    void add(char key[32],float val,char text[128]){
         sprintf_s(sql, 1024, "insert into new_table values('7/10', '0','测试add')");
         //执行语句
         if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
@@ -152,10 +215,40 @@ public:
 
     void menu(){
         int i=0;
+        int flag=0;
+        
         cout << "\t" << "0 s" << "\n" << "\t" << "1 a" << "\n" << "\t" << "2 r" << "\n" << "\t" << "3 u" << "\n" << "\t" << "4 c" << "\n";
         scanf_s("%d", &i);
         switch (i)
         {
+        case 0 :
+            select();            
+            break;
+
+        case 1 :
+            add();            
+            break;
+
+        case 2 :
+            remove();            
+            break;
+
+        case 3 :
+            update();            
+            break;
+
+        case 4:
+            custom();            
+            break;
+
+        default:
+        //防止锁死
+            flag++;
+            if(flag==3)
+            system("pause");
+            
+            break;
+
         case -1: 	
         ///< 释放结果集
 	    mysql_free_result(res);
@@ -163,31 +256,12 @@ public:
 	    ///< 关闭数据库连接
 	    mysql_close(&mysql);
         return;
-        break;
-
-        case 0 :
-            select();
-            menu();
-            break;
-        case 1 :
-            add();
-            menu();
-            break;
-        case 2 :
-            remove();
-            menu();
-            break;
-        case 3 :
-            update();
-            menu();
-            break;
-        case 4:
-            custom();
-            menu();
-            break;
-        default:
-            break;
+        //break;
         }
+        system("pause");
+        system("cls");
+        menu();
+        
     }
 
 };
@@ -197,6 +271,10 @@ int main()
     DB b;
     b.menu();
 
+
+
+    cout<<"进程已结束,";
+    system("pause");
     //结束
     return 0;
 }
