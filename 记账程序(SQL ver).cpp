@@ -6,9 +6,11 @@
 
 #include "mysql.h"
 
+//待做
 //st 可以拆分成 insert into new_table  和  values(。。。)俩个部分 可以给自定义用 然后用选择框的模式来调整 format【insert。。。】 + format【value/where】 之类的
 //添加动态方法进入cui
 //添加动态表名
+//语句反馈使用cout可能有问题，需要检查
 
 using namespace std;
 
@@ -16,6 +18,8 @@ const char dbusername[16] = "root";
 const char dbpassword[16] = "Astesia";
 const char dbname[16] = "new_schema";
 //const char table_name[16]=""; 
+
+string temp[16]={""};
 
 //刷新前置 //移动光标 ! unused !
 /*
@@ -287,54 +291,144 @@ public:
     }
 
         //输入方法 报文字段 报文位数
-    string get(int num[16],int n){
+    void get(int n){
+        cout << "输入参数\n:";
+        char a[32] = "";
+
+        cin.clear();
+        //会忽视第一个字符，禁用后不知道会不会出错。
+        //cin.ignore();
+        
+        int i = 0 ;
+        for (i = 0; i < n; i++) {
+            cout << "请输入参数 "<< i << "\n:";
+            cin.getline(a, sizeof(a) - 1, '\n');
+            //全局变量
+            temp[i] = a;
+        }
 
     }
+        
         //cui
     void menu(){
+        //选择falg
         int i=0;
+        //防止锁死flag
         int flag=0;
-        
-        cout << "\t" << "0 s" << "\n" << "\t" << "1 a" << "\n" << "\t" << "2 r" << "\n" << "\t" << "3 u" << "\n" << "\t" << "4 c" << "\n";
+        //提示
+        cout    << "\t" << "0 s" << "\n" 
+                << "\t" << "1 a" << "\n" 
+                << "\t" << "2 r" << "\n" 
+                << "\t" << "3 u" << "\n" 
+                << "\t" << "4 c" << "\n";
+
         scanf_s("%d", &i);
+
+        //选择
+            //int num[16]={0}, int n = 0;
         switch (i)
         {
-        case 0 :
-            select();            
-            break;
 
-        case 1 :
-            add();            
-            break;
+        case -1: 	
+            ///< 释放结果集
+	        mysql_free_result(res);
 
-        case 2 :
-            remove();            
-            break;
+	        ///< 关闭数据库连接
+	        mysql_close(&mysql);
+        return;
+        //break;
 
-        case 3 :
-            update();            
-            break;
+        //静态冗余
+        case 0:
+            int n;
+            cout    << "\t" << "0 s" << "\n" 
+                    << "\t" << "1 a" << "\n" 
+                    << "\t" << "2 r" << "\n" 
+                    << "\t" << "3 u" << "\n" 
+                    << "\t" << "4 c" << "\n";     
+            scanf_s("%d", &n);
+            switch (n)
+                {
+                case 0 :
+                    select();            
+                    break;
 
+                case 1 :
+                    add();            
+                    break;
+
+                case 2 :
+                    remove();            
+                    break;
+
+                case 3 :
+                    update();            
+                    break;
+
+                case 4:
+                    custom();            
+                    break;
+
+                default:
+                //防止锁死
+                    flag++;
+                    if(flag==3)
+                    system("pause");
+
+                    break;
+
+                case -1: 	
+                ///< 释放结果集
+	            mysql_free_result(res);
+
+	            ///< 关闭数据库连接
+	            mysql_close(&mysql);
+                return;
+                break;
+                }
+        break;
+
+        case 1:
+            select();
+        break;
+        /*
+        case 2:
+            n=3;
+            num[0]='1';
+            num[1]='1';
+            num[2]='1';
+            get(num,n);
+            add( key, val, text);
+        break;
+            n=1;
+            num[0]='1';
+            num[1]='0';
+            num[2]='0';
+            get(num,n);
+            remove(key);
+        case 3:
+            n=3;
+            num[0]='1';
+            num[1]='1';
+            num[2]='1';
+            get(num,n);
+            update(key, val, text);
+        break;
         case 4:
-            custom();            
-            break;
-
-        default:
+            custom();
+        break;
+        case 5:
+            cout<<"后面就没了\n";
+        break;
+        */
         //防止锁死
+        default:
             flag++;
             if(flag==3)
             system("pause");
-            
-            break;
+        break;
 
-        case -1: 	
-        ///< 释放结果集
-	    mysql_free_result(res);
-
-	    ///< 关闭数据库连接
-	    mysql_close(&mysql);
-        return;
-        //break;
+        
         }
         system("pause");
         system("cls");
@@ -349,11 +443,19 @@ public:
 int main()
 {
     DB b;
-    b.menu();
-    //b.add("7/3","32","测试动态''");//用两个单引号可以表示一个单引号数据
-    //b.remove("7/3");
-    //b.update("7/11","10","测试update的为动态");
+    //b.menu();
+    //("7/11","10","测试update的为动态") , ("7/3","32","测试动态''")
     //b.select();
+
+    //测试读取函数
+    int n = 3;
+    b.get(n);
+    //尝试让get运算后返回一个集合，例如数组。之后使用数组中的元素充当参数
+    //尝试让get的返回值赋值给a
+    //strcpy_s(a,b.);
+    cout << temp[0]<<"\n";
+    cout << temp[1]<<"\n";
+    cout << temp[2]<<"\n";
 	
     cout<<"进程已结束,";
     system("pause");
