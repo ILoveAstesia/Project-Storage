@@ -1,15 +1,24 @@
-﻿#include<iostream>
-#include<sstream>
-#include "mysql.h"
-#include<string.h>
+﻿#include <iostream>
+#include <sstream>
+#include <string.h>
+
 #include <windows.h>
+
+#include "mysql.h"
+
+//st 可以拆分成 insert into new_table  和  values(。。。)俩个部分 可以给自定义用 然后用选择框的模式来调整 format【insert。。。】 + format【value/where】 之类的
+//添加动态方法进入cui
+//添加动态表名
 
 using namespace std;
 
-const char dbusername[10] = "root";
-const char dbpassword[10] = "Astesia";
-const char dbname[12] = "new_schema";
+const char dbusername[16] = "root";
+const char dbpassword[16] = "Astesia";
+const char dbname[16] = "new_schema";
+//const char table_name[16]=""; 
+
 //刷新前置 //移动光标 ! unused !
+/*
 void gotoxy() {
     COORD pos = {0,0}; 
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE); 
@@ -59,7 +68,8 @@ void refresh_part(){
 
 }
 
-//unsuccessed
+//unsuccessed strcpy_s(a, st.c_str());直接转换了
+
 string transform_string_To_char(){
     string uri="astesia",name="ila",sex="boy";
     string st = "insert into DBTable(URI,Name,Sex)values(" + uri + "," + name +"," + sex + ")";
@@ -68,10 +78,11 @@ string transform_string_To_char(){
 
     k = st.c_str();	//让指针指向s1的位置
     
-    char a[1024];
+    //char a[1024]; strcpy_s(a, st.c_str());直接转换了
     
     return k;
 }
+*/
 
 class DB{
 
@@ -98,7 +109,7 @@ public:
     MYSQL_ROW row;
     char sql[1024]{ 0 };
     
-        //查询
+    //查询
     void select(){
         ///< 调用查询接口
         sprintf_s(sql, 1024, "select * from new_table");
@@ -141,13 +152,19 @@ public:
         }
     
     }
-    //动态 char key[32],float val,char text[128]
+    
+    //固定表格的动态 char key[32],float val,char text[128]
     void add(string key,string val,string text){
+        
         string st = "insert into new_table values(\'"  + key + "\',\'" + val + "\',\'" + text + "\')";
         char a[1024];
+        //转换
         strcpy_s(a, st.c_str());
+        //赋值
         sprintf_s(sql, 1024, a);
+        //反馈
         cout << sql;
+        //执行
         if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
         {
             cout << "查询失败" << ": " << mysql_errno(&mysql) << endl;
@@ -156,6 +173,7 @@ public:
     }
 
         //删除
+        //静态
     void remove(){
         sprintf_s(sql, 1024, "DELETE FROM new_table WHERE idnew_table = '7/10'");
         //执行语句
@@ -165,7 +183,27 @@ public:
 	    }
     }
 
+        //固定表格的动态
+    void remove(string key){
+            
+        string st = "DELETE FROM new_table WHERE idnew_table = \'"+key+"\'";
+        char a[1024];
+        //转换
+        strcpy_s(a, st.c_str());
+        //赋值
+        sprintf_s(sql, 1024, a);
+        //反馈
+        cout << sql;
+        //执行
+        if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+        {
+            cout << "查询失败" << ": " << mysql_errno(&mysql) << endl;
+        }
+    
+    }
+
         //更新
+        //静态
     void update(){
         
         sprintf_s(sql, 1024, "UPDATE new_table SET new_tablecol = 10 WHERE idnew_table = '7/10'");
@@ -176,6 +214,26 @@ public:
 	    }
     
     }
+        
+        //固定表格的动态
+    void update(string key,string val,string text){
+        
+        string st = "UPDATE new_table SET new_tablecol="+val+",new_tablecol1=\'"+text+"\' WHERE idnew_table =\'"+key+"\'";
+        char a[1024];
+        //转换
+        strcpy_s(a, st.c_str());
+        //赋值
+        sprintf_s(sql, 1024, a);
+        //反馈
+        cout << sql;
+        //执行
+        if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+        {
+            cout << "查询失败" << ": " << mysql_errno(&mysql) << endl;
+        }
+    
+    }
+
         //自定义
     void custom(){
         //最多只能使用1023
@@ -183,8 +241,6 @@ public:
         cin.clear();
         cin.ignore();
         cout << "请输入语句\n:";
-        //scanf_s("%s", &a, unsigned(sizeof(a))) == 0
-        //select * from new_table
         if (cin.getline(a, sizeof(a) - 1, '\n'))
         {
             //cout << a <<"\n";
@@ -209,14 +265,15 @@ public:
 
         
     }
-
+        
+        //显示结果集
     void display() {
         ///< 装载结果集
         res = mysql_store_result(&mysql);
 
         if (nullptr == res)
         {
-            cout << "装载数据失败" << ": " << mysql_errno(&mysql) << endl;
+            cout << "装载数据失败,or have no result(s)" << ": " << mysql_errno(&mysql) << endl;
         }
         else
         {
@@ -229,6 +286,11 @@ public:
         }
     }
 
+        //输入方法 报文字段 报文位数
+    string get(int num[16],int n){
+
+    }
+        //cui
     void menu(){
         int i=0;
         int flag=0;
@@ -279,30 +341,20 @@ public:
         menu();
         
     }
-
+    
+        //gui
+    void gui(){}
 };
 
 int main()
 {
-    //ui
     DB b;
-    //b.menu();
-    b.add("7/3","32","测试动态''");//用两个单引号可以表示一个单引号数据
-   
-   //c++ ? sql foramt
-    /*
-    string uri="astesia",name="ila",sex="boy";
-    string st = "insert into DBTable(URI,Name,Sex)values(" + uri + "," + name +"," + sex + ")";
-    
-    const char* k = NULL;
-
-    k = st.c_str();	//让指针指向s1的位置
-    
-    //cout << k;
-    printf(k);
-   */
+    b.menu();
+    //b.add("7/3","32","测试动态''");//用两个单引号可以表示一个单引号数据
+    //b.remove("7/3");
+    //b.update("7/11","10","测试update的为动态");
+    //b.select();
 	
-
     cout<<"进程已结束,";
     system("pause");
     //结束
