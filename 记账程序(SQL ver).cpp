@@ -1,16 +1,20 @@
-﻿#include <iostream>
+﻿//基础前置
+#include <iostream>
+//文件？
 #include <sstream>
+//字符串前置
 #include <string.h>
-
+//窗口、sleep、pause前置
 #include <windows.h>
-
+//数据库前置
 #include "mysql.h"
 
 //待做
 //st 可以拆分成 insert into new_table  和  values(。。。)俩个部分 可以给自定义用 然后用选择框的模式来调整 format【insert。。。】 + format【value/where】 之类的
-//添加动态方法进入cui
+//添加动态方法进入cui √
 //添加动态表名
 //语句反馈使用cout可能有问题，需要检查
+//输入\/会出现问题
 
 using namespace std;
 
@@ -19,6 +23,7 @@ const char dbpassword[16] = "Astesia";
 const char dbname[16] = "new_schema";
 //const char table_name[16]=""; 
 
+//全局暂存变量
 string temp[16]={""};
 
 //刷新前置 //移动光标 ! unused !
@@ -86,6 +91,25 @@ string transform_string_To_char(){
     
     return k;
 }
+
+//假的进度条
+void processbar()
+{
+    for (int i = 1; i <= 25; i++)cout << "-"; cout << "\n";
+
+
+    for (int i = 1; i <= 10; i++)
+    {
+        gotoxy(0, 2);						//将光标移动至控制台左上角
+
+        for (int j = 1; j <= i; j++)cout << " ";
+        cout << "\\" << endl;
+
+        Sleep(i * 30);
+        if (0) {}
+
+    }
+}
 */
 
 class DB{
@@ -103,8 +127,15 @@ public:
         if (!mysql_real_connect(&mysql, "localhost", dbusername, dbpassword, dbname, 3306, nullptr, 0))
         {
             cout << "数据库连接失败" << mysql_errno(&mysql) << endl;
+            system("pause");
+            exit(0);
+            
         }
+        else{
         cout << "数据库连接成功" << endl << endl;
+        Sleep(250);
+        system("cls");
+        }
     }
 
     ///< 创建数据库回应结构体
@@ -125,7 +156,7 @@ public:
 	    else
 	    {
 		    cout << "查询成功" << endl << endl;
-
+            cout <<"输入的指令是:"<<sql<<"\n";
 		    ///< 装载结果集
 		    res = mysql_store_result(&mysql);
 
@@ -167,7 +198,7 @@ public:
         //赋值
         sprintf_s(sql, 1024, a);
         //反馈
-        cout << sql;
+        cout <<"\n输入的指令是:"<<sql<<"\n";
         //执行
         if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
         {
@@ -197,7 +228,7 @@ public:
         //赋值
         sprintf_s(sql, 1024, a);
         //反馈
-        cout << sql;
+        cout <<"\n输入的指令是:"<<sql<<"\n";
         //执行
         if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
         {
@@ -229,7 +260,7 @@ public:
         //赋值
         sprintf_s(sql, 1024, a);
         //反馈
-        cout << sql;
+        cout <<"\n输入的指令是:"<<sql<<"\n";
         //执行
         if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
         {
@@ -297,7 +328,10 @@ public:
 
         cin.clear();
         //会忽视第一个字符，禁用后不知道会不会出错。
-        //cin.ignore();
+        //奇怪的规律，在main调用b。get（n）时开启ignore会跳过第一个
+        //在db类中，成员方法调用时关闭ignore会跳过第一个。
+        //这可能是现象不是本质，本质应该是判断之前有没有输入的数据残余。
+        cin.ignore();
         
         int i = 0 ;
         for (i = 0; i < n; i++) {
@@ -313,32 +347,39 @@ public:
     void menu(){
         //选择falg
         int i=0;
+        int k = 0;
         //防止锁死flag
         int flag=0;
-        //提示
-        cout    << "\t" << "0 s" << "\n" 
-                << "\t" << "1 a" << "\n" 
-                << "\t" << "2 r" << "\n" 
-                << "\t" << "3 u" << "\n" 
-                << "\t" << "4 c" << "\n";
+        //提示 待修改
+        cout    << "\t" << "-1 退出" << "\n"
+                << "\t" << " 0 静态冗余" << "\n" 
+                << "\t" << " 1 全查询" << "\n" 
+                << "\t" << " 2 对newtalbe添加(key,val,deatil)" << "\n" 
+                << "\t" << " 3 删除" << "\n" 
+                << "\t" << " 4 更新" << "\n"
+                << "\t" << " 5 自定义sql语句" << "\n";
 
+        cout<<"\n\t"<<"请输入对应的选项数字\n:";
         scanf_s("%d", &i);
-
+        cout<<"\n";
         //选择
-            //int num[16]={0}, int n = 0;
         switch (i)
         {
-
-        case -1: 	
+            //退出程序
+        case -1: 
+            //ZhongDuan :
             ///< 释放结果集
 	        mysql_free_result(res);
 
 	        ///< 关闭数据库连接
 	        mysql_close(&mysql);
+        //实现推出
         return;
-        //break;
+        //break; 多余的属于是
 
-        //静态冗余
+        //静态冗余 备份，这些二级选项可以删除，并且替换成相应的一级选项
+        //
+        /*
         case 0:
             int n;
             cout    << "\t" << "0 s" << "\n" 
@@ -387,25 +428,39 @@ public:
                 break;
                 }
         break;
-
+*/
         case 1:
             select();
         break;
-        /*
+    //添加
         case 2:
-            n=3;
-            num[0]='1';
-            num[1]='1';
-            num[2]='1';
-            get(num,n);
-            add( key, val, text);
+            k = 3;
+            get(k);
+            cout<<"\n";
+            cout    << "1:" << temp[0] << "\n"
+                    << "2:" << temp[1] << "\n"
+                    << "2:" << temp[2] << "\n";
+            add( temp[0], temp[1], temp[2]);
         break;
-            n=1;
-            num[0]='1';
-            num[1]='0';
-            num[2]='0';
-            get(num,n);
-            remove(key);
+    //删除
+        case 3:
+            k = 1;
+            get(k);
+            cout<<"\n";            
+            cout    << "1:" << temp[0] << "\n";
+            remove( temp[0] );
+        break;
+    //更新
+        case 4:
+            k = 3;
+            get(k);
+            cout<<"\n";
+            cout    << "1:" << temp[0] << "\n"
+                    << "2:" << temp[1] << "\n"
+                    << "2:" << temp[2] << "\n";
+            update( temp[0], temp[1], temp[2]);
+        break;
+        /*
         case 3:
             n=3;
             num[0]='1';
@@ -414,22 +469,32 @@ public:
             get(num,n);
             update(key, val, text);
         break;
-        case 4:
+        */
+    //自定义语句
+        case 5:
             custom();
         break;
-        case 5:
+        case 6:
             cout<<"后面就没了\n";
         break;
-        */
-        //防止锁死
+        //防止锁死  
         default:
+        cout<<"\n\t未知指令|错误指令|循环错误\n";
             flag++;
-            if(flag==3)
+            cout<<"\n";
+            cout<<"flag="<<flag;
+            if(flag==8)
+            {
+            cout<<"检查测到循环错误"<<"\n";
+            cout<<"执行任何按键操作以终止程序"<<"\n";
             system("pause");
+            return;
+            }
         break;
 
         
         }
+        
         system("pause");
         system("cls");
         menu();
@@ -440,25 +505,21 @@ public:
     void gui(){}
 };
 
-int main()
-{
-    DB b;
-    //b.menu();
     //("7/11","10","测试update的为动态") , ("7/3","32","测试动态''")
     //b.select();
-
     //测试读取函数
-    int n = 3;
-    b.get(n);
     //尝试让get运算后返回一个集合，例如数组。之后使用数组中的元素充当参数
     //尝试让get的返回值赋值给a
     //strcpy_s(a,b.);
-    cout << temp[0]<<"\n";
-    cout << temp[1]<<"\n";
-    cout << temp[2]<<"\n";
-	
+    //现在零时通过全局变量temp实现传递
+
+int main()
+{
+    DB b;
+    b.menu();
     cout<<"进程已结束,";
     system("pause");
     //结束
     return 0;
 }
+
