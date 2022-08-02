@@ -12,7 +12,7 @@
 //待做
 //st 可以拆分成 insert into new_table  和  values(。。。)俩个部分 可以给自定义用 然后用选择框的模式来调整 format【insert。。。】 + format【value/where】 之类的
 //添加动态方法进入cui √
-//添加动态表名
+//添加动态表名 ing
 //语句反馈使用cout可能有问题，需要检查
 //输入\/会出现问题
 
@@ -140,10 +140,53 @@ public:
 
     ///< 创建数据库回应结构体
     MYSQL_RES* res = nullptr;
+    MYSQL_RES* rest = nullptr;
     ///< 创建存放结果的结构体
     MYSQL_ROW row;
+    //   创建存放表头的结构体
+    MYSQL_ROW title;
     char sql[1024]{ 0 };
     
+    void title_get(string key){
+        //SELECT COLUMN_NAME  FROM information_schema.columns WHERE table_name=\'"+ key +"\'
+        string st = "SELECT COLUMN_NAME  FROM information_schema.columns WHERE table_name=\'"+ key +"\'";
+        char a[1024];
+        //转换
+        strcpy_s(a, st.c_str());
+        //赋值
+        sprintf_s(sql, 1024, a);
+        //执行
+        if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+	    {
+		    cout << "查询失败" << ": "  << mysql_errno(&mysql) << endl;
+            cout <<"输入的指令是:"<<sql<<"\n";
+	    }
+	    else
+	    {
+		    //cout << "查询成功" << endl << endl;
+            //cout <<"输入的指令是:"<<sql<<"\n";
+		    ///< 装载结果集
+		    rest = mysql_store_result(&mysql);
+
+		    if (nullptr == rest)
+		    {
+			    cout << "装载数据失败" << ": " << mysql_errno(&mysql)  << endl;
+		    }
+		    else
+		    {
+			    ///< 取出结果集中内容
+                //int n=0;
+			    while (title = mysql_fetch_row(rest))
+			    {
+                    //temp[n]= title[0];n++;
+                    cout << title[0]<<"\t";
+			    }
+		    }
+            ///< 释放结果集
+	        //mysql_free_result(rest);
+            cout << endl;
+	    }
+    }
     //查询
     void select(){
         ///< 调用查询接口
@@ -152,6 +195,7 @@ public:
 	    if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
 	    {
 		    cout << "查询失败" << ": "  << mysql_errno(&mysql) << endl;
+            cout <<"输入的指令是:"<<sql<<"\n";
 	    }
 	    else
 	    {
@@ -171,6 +215,50 @@ public:
 			    {
                     //可以优化
 				    cout << row[0] << "  "  << row[1] << "  " << row[2] << endl;
+			    }
+		    }
+	    }
+    }
+
+    void select(string key){
+        ///< 调用查询接口
+        //SHOW COLUMNS FROM "+ key +"
+        //select * from "+ key +"
+        //SELECT COLUMN_NAME  FROM information_schema.columns WHERE table_name=\'"+ key +"\'
+        string st = "select * from " + key + "";
+        char a[1024];
+        //转换
+        strcpy_s(a, st.c_str());
+        //赋值
+        sprintf_s(sql, 1024, a);
+
+
+	    if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+	    {
+		    cout << "查询失败" << ": "  << mysql_errno(&mysql) << endl;
+	    }
+	    else
+	    {
+		    cout << "查询成功" << endl << endl;
+            cout <<"输入的指令是:"<<sql<<"\n";
+		    ///< 装载结果集
+		    res = mysql_store_result(&mysql);
+
+		    if (nullptr == res)
+		    {
+			    cout << "装载数据失败" << ": " << mysql_errno(&mysql)  << endl;
+		    }
+		    else
+		    {
+                //表头
+                title_get(key);
+                //cout<<temp[0]<< "\t"  << temp[1] << "\t" << temp[2] << endl;
+			    ///< 取出结果集中内容
+			    while (row = mysql_fetch_row(res))
+			    {
+
+                    //可以优化
+				    cout << row[0] << "\t"  << row[1] << "\t" << row[2] << endl;
 			    }
 		    }
 	    }
@@ -513,10 +601,15 @@ public:
     //strcpy_s(a,b.);
     //现在零时通过全局变量temp实现传递
 
+
+
+
 int main()
 {
     DB b;
-    b.menu();
+    //b.menu();
+    //b.title_get("sc");
+    b.select("sc");
     cout<<"进程已结束,";
     system("pause");
     //结束
