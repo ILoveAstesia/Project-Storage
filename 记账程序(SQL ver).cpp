@@ -601,9 +601,6 @@ public:
     //strcpy_s(a,b.);
     //现在零时通过全局变量temp实现传递
 
-
-
-
 int main()
 {
     DB b;
