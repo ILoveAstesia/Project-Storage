@@ -1,7 +1,7 @@
 ﻿//基础前置
 #include <iostream>
 //文件？
-#include <sstream>
+//#include <sstream>
 //字符串前置
 #include <string.h>
 //窗口、sleep、pause前置
@@ -9,12 +9,18 @@
 //数据库前置
 #include "mysql.h"
 
+//vs    ctrl m + l,m + o(pen)
+//code  ctrl k + 0
+
 //待做
+
+//get方法到底怎么用，这个ignore怎么回事。分离了ignore和get的cin.getline();方法
+
 //st 可以拆分成 insert into new_table  和  values(。。。)俩个部分 可以给自定义用 然后用选择框的模式来调整 format【insert。。。】 + format【value/where】 之类的
 //添加动态方法进入cui √
-//添加动态表名 ing
+//添加动态表名 ing 发现问题，update语句需要知道表名，并且需要知道列数
 //语句反馈使用cout可能有问题，需要检查
-//输入\/会出现问题
+//switch输入\/会出现问题
 
 using namespace std;
 
@@ -25,6 +31,7 @@ const char dbname[16] = "new_schema";
 
 //全局暂存变量
 string temp[16]={""};
+//char temp_title[16][16] = { "" };
 
 //刷新前置 //移动光标 ! unused !
 /*
@@ -147,6 +154,8 @@ public:
     MYSQL_ROW title;
     char sql[1024]{ 0 };
     
+    
+
     void title_get(string key){
         //SELECT COLUMN_NAME  FROM information_schema.columns WHERE table_name=\'"+ key +"\'
         string st = "SELECT COLUMN_NAME  FROM information_schema.columns WHERE table_name=\'"+ key +"\'";
@@ -187,6 +196,76 @@ public:
             cout << endl;
 	    }
     }
+
+    void title_back(string key){
+        //SELECT COLUMN_NAME  FROM information_schema.columns WHERE table_name=\'"+ key +"\'
+        string st = "SELECT COLUMN_NAME  FROM information_schema.columns WHERE table_name=\'"+ key +"\'";
+        char a[1024];
+        //转换
+        strcpy_s(a, st.c_str());
+        //赋值
+        sprintf_s(sql, 1024, a);
+        //执行
+        if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+	    {
+		    cout << "查询失败" << ": "  << mysql_errno(&mysql) << endl;
+            cout <<"输入的指令是:"<<sql<<"\n";
+	    }
+	    else
+	    {
+		    ///< 装载结果集
+		    rest = mysql_store_result(&mysql);
+
+		    if (nullptr == rest)
+		    {
+			    cout << "装载数据失败" << ": " << mysql_errno(&mysql)  << endl;
+		    }
+		    else
+		    {
+			    ///< 取出结果集中内容
+                int i=0;
+			    while (title = mysql_fetch_row(rest))
+			    {
+                    cout << title[0]<<"\t";
+                    temp[i]=title[0];
+                    i++;
+			    }
+		    }
+            cout << endl;
+	    }
+    }
+    
+    //输入方法 报文字段 报文位数
+    void get(int n){
+        //会忽视第一个字符，禁用后不知道会不会出错。
+        //奇怪的规律，在main调用b。get（n）时开启ignore会跳过第一个
+        //在db类中，成员方法调用时关闭ignore会跳过第一个。
+        //这可能是现象不是本质，本质应该是判断之前有没有输入的数据残余。
+        cin.clear();
+        cin.ignore(0);
+        get_n(n);
+
+    }
+
+    void get_n(int n){
+        cout << "输入参数\n:";
+        char a[32] = "";
+
+        
+        int i = 0 ;
+        for (i = 0; i < n; i++) {
+            cout << "请输入参数 "<< i << "\n:";
+            cin.getline(a, sizeof(a) - 1, '\n');
+            //全局变量
+            temp[i] = a;
+        }
+    }
+        
+    void admin(){
+        update_dynamic("sc", "8/3", "6.0000", "小七 6.0000");
+        select("sc");
+    }
+    
     //查询
     void select(){
         ///< 调用查询接口
@@ -295,6 +374,25 @@ public:
     
     }
 
+    //真动态
+    void add_dynamic(string d,string key,string val,string text){
+        
+        string st = "insert into "+ d +" values(\'"  + key + "\',\'" + val + "\',\'" + text + "\')";
+        char a[1024];
+        //转换
+        strcpy_s(a, st.c_str());
+        //赋值
+        sprintf_s(sql, 1024, a);
+        //反馈
+        cout <<"\n输入的指令是:"<<sql<<"\n";
+        //执行
+        if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+        {
+            cout << "查询失败" << ": " << mysql_errno(&mysql) << endl;
+        }
+    
+    }
+
         //删除
         //静态
     void remove(){
@@ -357,6 +455,34 @@ public:
     
     }
 
+    //表，键，值1,...
+    void update_dynamic(string d,string key,string val,string text){
+        //判断表名，填写sql语句！
+        //get_n(3);
+        title_back(d);
+        //string col[16];
+        //strcpy_s(a, st.c_str());
+        //strcpy_s(col,col);
+        //cout    << "1:" << temp[0] << "\n"
+        //        << "2:" << temp[1] << "\n"
+        //        << "2:" << temp[2] << "\n";
+        
+        string st = "UPDATE " + d + " SET " + temp[0] +"=" + val + "," + temp[2] +"=\'" + text + "\' WHERE " + temp[1] + " =\'" + key + "\'";
+        char a[1024];
+        //转换
+        strcpy_s(a, st.c_str());
+        //赋值
+        sprintf_s(sql, 1024, a);
+        //反馈
+        cout <<"\n输入的指令是:"<<sql<<"\n";
+        //执行
+        if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+        {
+            cout << "查询失败" << ": " << mysql_errno(&mysql) << endl;
+        }
+        
+    }
+
         //自定义
     void custom(){
         //最多只能使用1023
@@ -409,27 +535,6 @@ public:
         }
     }
 
-        //输入方法 报文字段 报文位数
-    void get(int n){
-        cout << "输入参数\n:";
-        char a[32] = "";
-
-        cin.clear();
-        //会忽视第一个字符，禁用后不知道会不会出错。
-        //奇怪的规律，在main调用b。get（n）时开启ignore会跳过第一个
-        //在db类中，成员方法调用时关闭ignore会跳过第一个。
-        //这可能是现象不是本质，本质应该是判断之前有没有输入的数据残余。
-        cin.ignore();
-        
-        int i = 0 ;
-        for (i = 0; i < n; i++) {
-            cout << "请输入参数 "<< i << "\n:";
-            cin.getline(a, sizeof(a) - 1, '\n');
-            //全局变量
-            temp[i] = a;
-        }
-
-    }
         
         //cui
     void menu(){
@@ -441,7 +546,7 @@ public:
         //提示 待修改
         cout    << "\t" << "-1 退出" << "\n"
                 << "\t" << " 0 静态冗余" << "\n" 
-                << "\t" << " 1 全查询" << "\n" 
+                << "\t" << " 1 表查询" << "\n" 
                 << "\t" << " 2 对newtalbe添加(key,val,deatil)" << "\n" 
                 << "\t" << " 3 删除" << "\n" 
                 << "\t" << " 4 更新" << "\n"
@@ -517,8 +622,17 @@ public:
                 }
         break;
 */
-        case 1:
+        
+        case 0:
             select();
+        break;
+
+        case 1:
+            k = 1;
+            get(k);
+            cout<<"\n";
+            cout    << "1:" << temp[0] << "\n";
+            select(temp[0]);
         break;
     //添加
         case 2:
@@ -605,8 +719,8 @@ int main()
 {
     DB b;
     //b.menu();
-    //b.title_get("sc");
-    b.select("sc");
+    b.admin();
+    //select count(*) from information_schema.columns where table_schema=\'"+d+"\' and table_name=\'"+t+"\';
     cout<<"进程已结束,";
     system("pause");
     //结束
