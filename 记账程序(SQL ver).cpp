@@ -13,7 +13,7 @@
 //code  ctrl k + 0
 
 //待做
-
+//测试非admin 方法时 get 的使用（menu使用）
 //get方法到底怎么用，这个ignore怎么回事。分离了ignore和get的cin.getline();方法
 
 //st 可以拆分成 insert into new_table  和  values(。。。)俩个部分 可以给自定义用 然后用选择框的模式来调整 format【insert。。。】 + format【value/where】 之类的
@@ -261,10 +261,12 @@ public:
         }
     }
         
-    void admin(){
-        update_dynamic("sc", "8/3", "6.0000", "小七 6.0000");
+void admin(){
+        //update_dynamic("sc", "8/3", "6.0000", "小七 6.0000");
+        //select("sc");
+        //remove_dynamic("sc", "7/31");
         select("sc");
-    }
+}
     
     //查询
     void select(){
@@ -423,6 +425,24 @@ public:
     
     }
 
+    void remove_dynamic(string d,string key) {
+        title_back(d);
+        string st = "DELETE FROM " + d + " WHERE " + temp[1] + " = \'" + key + "\'";
+        char a[1024];
+        //转换
+        strcpy_s(a, st.c_str());
+        //赋值
+        sprintf_s(sql, 1024, a);
+        //反馈
+        cout << "\n输入的指令是:" << sql << "\n";
+        //执行
+        if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
+        {
+            cout << "查询失败" << ": " << mysql_errno(&mysql) << endl;
+        }
+
+    }
+
         //更新
         //静态
     void update(){
@@ -478,7 +498,7 @@ public:
         //执行
         if (mysql_real_query(&mysql, sql, (unsigned int)strlen(sql)))
         {
-            cout << "查询失败" << ": " << mysql_errno(&mysql) << endl;
+            cout << "查询失败" << ": " << mysql_errno(&mysql) << endl<< mysql_error(&mysql) << endl;
         }
         
     }
