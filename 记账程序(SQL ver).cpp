@@ -15,6 +15,7 @@
 //待做
 //测试非admin 方法时 get 的使用（menu使用）
 //get方法到底怎么用，这个ignore怎么回事。分离了ignore和get的cin.getline();方法
+//如何让外部访问内置数据库文件，或者导出数据库文件
 
 //st 可以拆分成 insert into new_table  和  values(。。。)俩个部分 可以给自定义用 然后用选择框的模式来调整 format【insert。。。】 + format【value/where】 之类的
 //添加动态方法进入cui √
