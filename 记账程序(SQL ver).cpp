@@ -22,6 +22,8 @@
 //语句反馈使用cout可能有问题，需要检查
 //switch输入\/会出现问题
 
+//测试
+
 using namespace std;
 
 const char dbusername[16] = "root";
